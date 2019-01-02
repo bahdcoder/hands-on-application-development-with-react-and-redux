@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>REDUX</title>
+</head>
+<body>
+  <button id="button">ADD COUNT</button>
+  <h1 id="count">0</h1>
+  <p id="status"></p>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js"></script>
+  <script>
+    const initialState = {
+      count: 0
+    }
+    const reducer = function (state = initialState, action) {
+      if (action.type === 'ADD_COUNT') {
+        return {
+          count: state.count + 1
+        }
+      }
+      return state
+    }
+    const store = Redux.createStore(reducer)
+    const button = document.getElementById('button')
+    button.addEventListener('click', function () {
+      store.dispatch({
+        type: 'ADD_COUNT'
+      })
+    })
+    store.subscribe(function () {
+      const count = document.getElementById('count')
+      count.innerHTML = store.getState().count
+    })
+    store.subscribe(function () {
+      const status = document.getElementById('status')
+      if (store.getState().count % 2 === 0) {
+        status.innerHTML = 'EVEN'
+      } else {
+        status.innerHTML = 'ODD'
+      }
+    })
+  </script>
+</body>
+</html>
